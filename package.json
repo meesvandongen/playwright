@@ -1,32 +1,14 @@
 {
-  "type": "module",
-  "name": "@msw/playwright",
+  "name": "@mvd/playwright-msw",
   "version": "0.4.2",
   "description": "Mock Service Worker binding for Playwright",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
-  "scripts": {
-    "dev": "tsdown --watch",
-    "test": "playwright test",
-    "app:dev": "vite dev",
-    "app:build": "vite build",
-    "app:start": "vite",
-    "build": "tsdown",
-    "release": "release publish"
-  },
-  "files": [
-    "./src",
-    "./build"
-  ],
   "keywords": [
-    "playwright",
     "api",
     "mock",
     "msw",
+    "playwright",
     "request"
   ],
-  "license": "MIT",
-  "funding": "https://github.com/sponsors/mswjs",
   "homepage": "https://mswjs.io",
   "repository": {
     "type": "git",
@@ -36,27 +18,46 @@
     "name": "Artem Zakharchenko",
     "url": "https://github.com/kettanaito"
   },
-  "publishConfig": {
-    "access": "public"
+  "funding": "https://github.com/sponsors/mswjs",
+  "license": "MIT",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "./build",
+    "./src"
+  ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "test": "playwright test",
+    "app:dev": "vite dev",
+    "app:build": "vite build",
+    "app:start": "vite",
+    "build": "tsdown",
+    "release": "release publish"
   },
-  "engines": {
-    "node": ">=20.0.0"
+  "dependencies": {
+    "@mswjs/interceptors": "^0.40.0",
+    "outvariant": "^1.4.3"
+  },
+  "devDependencies": {
+    "@epic-web/test-server": "^0.1.6",
+    "@ossjs/release": "^0.10.1",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
+    "msw": "^2.12.4",
+    "oxfmt": "^0.18.0",
+    "tsdown": "^0.18.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
   },
   "peerDependencies": {
     "msw": "^2.10.3"
   },
-  "devDependencies": {
-    "@epic-web/test-server": "^0.1.6",
-    "@ossjs/release": "^0.8.1",
-    "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.29",
-    "msw": "^2.10.3",
-    "tsdown": "^0.12.7",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.2"
+  "engines": {
+    "node": ">=20.0.0"
   },
-  "dependencies": {
-    "@mswjs/interceptors": "^0.39.2",
-    "outvariant": "^1.4.3"
+  "publishConfig": {
+    "access": "public"
   }
 }

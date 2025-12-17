@@ -1,109 +1,100 @@
-import { test as testBase, expect } from '@playwright/test'
-import { http } from 'msw'
-import { createNetworkFixture, type NetworkFixture } from '../src/index.js'
+import { test as testBase, expect } from "@playwright/test";
+import { http } from "msw";
+import { createNetworkFixture, type NetworkFixture } from "../src/index.js";
 
 interface Fixtures {
-  network: NetworkFixture
+  network: NetworkFixture;
 }
 
 const test = testBase.extend<Fixtures>({
   network: createNetworkFixture(),
-})
+});
 
-test('intercepts a GET request', async ({ network, page }) => {
-  const requestPromise = Promise.withResolvers<Request>()
+test("intercepts a GET request", async ({ network, page }) => {
+  const requestPromise = Promise.withResolvers<Request>();
   network.use(
-    http.get('/resource', ({ request }) => {
-      requestPromise.resolve(request)
+    http.get("/resource", ({ request }) => {
+      requestPromise.resolve(request);
     }),
-  )
+  );
 
-  await page.goto('/')
+  await page.goto("/");
   await page.evaluate(async () => {
-    fetch('/resource', {
+    fetch("/resource", {
       headers: {
-        'x-test-header': 'test-value',
+        "x-test-header": "test-value",
       },
-    })
-  })
+    });
+  });
 
-  const request = await requestPromise.promise
-  expect(request.method).toBe('GET')
-  expect(request.url).toBe('http://localhost:5173/resource')
-  expect(Array.from(request.headers)).toContainEqual([
-    'x-test-header',
-    'test-value',
-  ])
-})
+  const request = await requestPromise.promise;
+  expect(request.method).toBe("GET");
+  expect(request.url).toBe("http://localhost:5173/resource");
+  expect(Array.from(request.headers)).toContainEqual(["x-test-header", "test-value"]);
+});
 
-test('intercepts a POST request without any body', async ({
-  network,
-  page,
-}) => {
-  const requestPromise = Promise.withResolvers<Request>()
+test("intercepts a POST request without any body", async ({ network, page }) => {
+  const requestPromise = Promise.withResolvers<Request>();
   network.use(
-    http.post('/action', ({ request }) => {
-      requestPromise.resolve(request)
+    http.post("/action", ({ request }) => {
+      requestPromise.resolve(request);
     }),
-  )
+  );
 
-  await page.goto('/')
+  await page.goto("/");
   await page.evaluate(async () => {
-    fetch('/action', {
-      method: 'POST',
+    fetch("/action", {
+      method: "POST",
       body: null,
-    })
-  })
+    });
+  });
 
-  const request = await requestPromise.promise
-  expect(request.method).toBe('POST')
-  expect(request.url).toBe('http://localhost:5173/action')
-  expect(request.body).toBeNull()
-})
+  const request = await requestPromise.promise;
+  expect(request.method).toBe("POST");
+  expect(request.url).toBe("http://localhost:5173/action");
+  expect(request.body).toBeNull();
+});
 
-test('intercepts a POST request with text body', async ({ network, page }) => {
-  const requestPromise = Promise.withResolvers<Request>()
+test("intercepts a POST request with text body", async ({ network, page }) => {
+  const requestPromise = Promise.withResolvers<Request>();
   network.use(
-    http.post('/action', ({ request }) => {
-      requestPromise.resolve(request)
+    http.post("/action", ({ request }) => {
+      requestPromise.resolve(request);
     }),
-  )
+  );
 
-  await page.goto('/')
+  await page.goto("/");
   await page.evaluate(async () => {
-    fetch('action', {
-      method: 'POST',
-      body: 'hello world',
-    })
-  })
+    fetch("action", {
+      method: "POST",
+      body: "hello world",
+    });
+  });
 
-  const request = await requestPromise.promise
-  expect(request.method).toBe('POST')
-  expect(request.url).toBe('http://localhost:5173/action')
-  await expect(request.text()).resolves.toBe('hello world')
-})
+  const request = await requestPromise.promise;
+  expect(request.method).toBe("POST");
+  expect(request.url).toBe("http://localhost:5173/action");
+  await expect(request.text()).resolves.toBe("hello world");
+});
 
-test('intercepts a POST request with array buffer body', async ({
-  network,
-  page,
-}) => {
-  const requestPromise = Promise.withResolvers<Request>()
+test("intercepts a POST request with array buffer body", async ({ network, page }) => {
+  const requestPromise = Promise.withResolvers<Request>();
   network.use(
-    http.post('/action', ({ request }) => {
-      requestPromise.resolve(request)
+    http.post("/action", ({ request }) => {
+      requestPromise.resolve(request);
     }),
-  )
+  );
 
-  await page.goto('/')
+  await page.goto("/");
   await page.evaluate(async () => {
-    fetch('/action', {
-      method: 'POST',
-      body: new TextEncoder().encode('hello world'),
-    })
-  })
+    fetch("/action", {
+      method: "POST",
+      body: new TextEncoder().encode("hello world"),
+    });
+  });
 
-  const request = await requestPromise.promise
-  expect(request.method).toBe('POST')
-  expect(request.url).toBe('http://localhost:5173/action')
-  await expect(request.text()).resolves.toBe('hello world')
-})
+  const request = await requestPromise.promise;
+  expect(request.method).toBe("POST");
+  expect(request.url).toBe("http://localhost:5173/action");
+  await expect(request.text()).resolves.toBe("hello world");
+});

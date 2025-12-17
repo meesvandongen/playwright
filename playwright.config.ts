@@ -1,28 +1,28 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   use: {
-    baseURL: 'http://localhost:5173',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    baseURL: "http://localhost:5173",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
     launchOptions: {
       devtools: !process.env.CI,
     },
   },
   forbidOnly: !!process.env.CI,
   fullyParallel: true,
-  reporter: 'list',
+  reporter: "list",
   webServer: {
-    command: 'npm run app:build && npm run app:start',
-    url: 'http://localhost:5173',
+    command: "npm run app:build && npm run app:start",
+    url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
-    stderr: 'pipe',
+    stderr: "pipe",
   },
-})
+});
