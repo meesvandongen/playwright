@@ -1,6 +1,6 @@
 {
   "name": "@mvd/playwright-msw",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Mock Service Worker binding for Playwright",
   "keywords": [
     "api",
@@ -21,8 +21,8 @@
   "funding": "https://github.com/sponsors/mswjs",
   "license": "MIT",
   "type": "module",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
+  "main": "./build/index.mjs",
+  "types": "./build/index.d.mts",
   "files": [
     "./build",
     "./src"
